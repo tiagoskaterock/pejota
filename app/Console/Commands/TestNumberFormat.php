@@ -29,6 +29,6 @@ class TestNumberFormat extends Command
     {
         $user = User::first();
         auth()->login($user);
-        print CompanySettingsEnum::DOCS_INVOICE_NUMBER_LAST->getNextDocNumberFormated();
+        echo CompanySettingsEnum::DOCS_INVOICE_NUMBER_LAST->getNextDocNumberFormated();
     }
 }

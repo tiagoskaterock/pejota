@@ -3,7 +3,6 @@
 namespace App\Filament\App\Resources\WorkSessionResource\Pages;
 
 use App\Filament\App\Resources\WorkSessionResource;
-use App\Models\Task;
 use App\Models\WorkSession;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
@@ -26,11 +25,10 @@ class ListWorkSessions extends ListRecords
     {
         return [
             'running' => Tab::make()
-                ->modifyQueryUsing(fn(Builder $query): Builder => $query->where('is_running', true))
-                ->badge(fn(WorkSession $record): int => $record->where('is_running', true)->count())
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->where('is_running', true))
+                ->badge(fn (WorkSession $record): int => $record->where('is_running', true)->count())
                 ->badgeColor(Color::Green),
             'all' => Tab::make(),
         ];
     }
-
 }

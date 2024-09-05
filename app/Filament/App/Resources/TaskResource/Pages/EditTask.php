@@ -6,7 +6,6 @@ use App\Filament\App\Resources\TaskResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Colors\Color;
-use Illuminate\Database\Eloquent\Model;
 use Parallax\FilamentComments\Actions\CommentsAction;
 
 class EditTask extends EditRecord

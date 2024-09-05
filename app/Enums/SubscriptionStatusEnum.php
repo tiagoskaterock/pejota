@@ -7,7 +7,7 @@ use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 
-enum SubscriptionStatusEnum: string implements HasLabel, HasIcon, HasColor
+enum SubscriptionStatusEnum: string implements HasColor, HasIcon, HasLabel
 {
     case TRIAL = 'trial';
     case ACTIVE = 'active';

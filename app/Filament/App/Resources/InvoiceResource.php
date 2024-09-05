@@ -8,14 +8,11 @@ use App\Filament\App\Resources\InvoiceResource\Pages;
 use App\Filament\App\Resources\InvoiceResource\RelationManagers;
 use App\Models\Invoice;
 use App\Models\Product;
-use App\Models\TabelaPreco;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InvoiceResource extends Resource
 {
@@ -36,10 +33,10 @@ class InvoiceResource extends Resource
                 Forms\Components\TextInput::make('number')
                     ->translateLabel()
                     ->required()
-                    ->default(fn() => CompanySettingsEnum::DOCS_INVOICE_NUMBER_LAST->getNextDocNumberFormated()),
+                    ->default(fn () => CompanySettingsEnum::DOCS_INVOICE_NUMBER_LAST->getNextDocNumberFormated()),
                 Forms\Components\Select::make('status')
                     ->options(InvoiceStatusEnum::class)
-                    ->default(fn() => InvoiceStatusEnum::DRAFT)
+                    ->default(fn () => InvoiceStatusEnum::DRAFT)
                     ->required(),
                 Forms\Components\DatePicker::make('due_date')
                     ->translateLabel()
@@ -116,17 +113,17 @@ class InvoiceResource extends Resource
                             ->required()
                             ->numeric()
                             ->live()
-                            ->afterStateUpdated(fn(Forms\Set $set, Forms\Get $get) => self::calcTotal($get, $set)),
+                            ->afterStateUpdated(fn (Forms\Set $set, Forms\Get $get) => self::calcTotal($get, $set)),
                         Forms\Components\TextInput::make('price')
                             ->translateLabel()
                             ->required()
                             ->numeric()
                             ->live()
-                            ->afterStateUpdated(fn(Forms\Set $set, Forms\Get $get) => self::calcTotal($get, $set)),
+                            ->afterStateUpdated(fn (Forms\Set $set, Forms\Get $get) => self::calcTotal($get, $set)),
                         Forms\Components\TextInput::make('discount')
                             ->translateLabel()
                             ->numeric()
-                            ->afterStateUpdated(fn(Forms\Set $set, Forms\Get $get) => self::calcTotal($get, $set)),
+                            ->afterStateUpdated(fn (Forms\Set $set, Forms\Get $get) => self::calcTotal($get, $set)),
                         Forms\Components\TextInput::make('total')
                             ->translateLabel()
                             ->required()
@@ -191,7 +188,7 @@ class InvoiceResource extends Resource
     public static function getRelations(): array
     {
         return [
-//            RelationManagers\ItemRelationManager::class,
+            //            RelationManagers\ItemRelationManager::class,
         ];
     }
 
@@ -207,9 +204,9 @@ class InvoiceResource extends Resource
 
     public static function calcTotal(Forms\Get $get, Forms\Set $set)
     {
-        $price = (float)str_replace(',', '.', $get('price'));
-        $qty = (float)$get('quantity');
-        $discount = (float)$get('discount') ?? 0;
+        $price = (float) str_replace(',', '.', $get('price'));
+        $qty = (float) $get('quantity');
+        $discount = (float) $get('discount') ?? 0;
 
         $total = round(($price * $qty) * (100 - $discount) / 100, 2);
 

@@ -10,7 +10,7 @@ use Spatie\Tags\HasTags;
 
 class Subscription extends Model
 {
-    use HasFactory, BelongsToTenants, HasTags;
+    use BelongsToTenants, HasFactory, HasTags;
 
     protected $guarded = ['id'];
 

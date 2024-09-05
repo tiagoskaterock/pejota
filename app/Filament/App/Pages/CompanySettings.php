@@ -126,9 +126,8 @@ class CompanySettings extends ModelSettingsPage implements HasModelSettings
                         ->schema([
                             Forms\Components\TextInput::make(CompanySettingsEnum::DOCS_INVOICE_NUMBER_FORMAT->value)
                                 ->translateLabel()
-                                ->default(fn() => 'ym00'), // TODO this should come from enum maybe
+                                ->default(fn () => 'ym00'), // TODO this should come from enum maybe
                         ]),
-
 
                 ]),
 

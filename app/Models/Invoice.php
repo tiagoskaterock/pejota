@@ -12,7 +12,7 @@ use Spatie\Tags\HasTags;
 
 class Invoice extends Model
 {
-    use HasFactory, BelongsToTenants, HasTags;
+    use BelongsToTenants, HasFactory, HasTags;
 
     protected $guarded = ['id'];
 

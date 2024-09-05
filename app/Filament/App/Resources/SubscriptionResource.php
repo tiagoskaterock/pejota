@@ -6,7 +6,6 @@ use App\Enums\MenuGroupsEnum;
 use App\Enums\SubscriptionBillingPeriodEnum;
 use App\Enums\SubscriptionStatusEnum;
 use App\Filament\App\Resources\SubscriptionResource\Pages;
-use App\Filament\App\Resources\SubscriptionResource\RelationManagers;
 use App\Helpers\PejotaHelper;
 use App\Models\Subscription;
 use Filament\Forms;
@@ -14,9 +13,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubscriptionResource extends Resource
 {
@@ -66,10 +63,10 @@ class SubscriptionResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('trial_ends_at')
                     ->translateLabel()
-                    ->required(fn(Forms\Get $get) => $get('status') == SubscriptionStatusEnum::TRIAL->value),
+                    ->required(fn (Forms\Get $get) => $get('status') == SubscriptionStatusEnum::TRIAL->value),
                 Forms\Components\DatePicker::make('canceled_at')
                     ->translateLabel()
-                    ->required(fn(Forms\Get $get) => $get('status') == SubscriptionStatusEnum::CANCELED->value),
+                    ->required(fn (Forms\Get $get) => $get('status') == SubscriptionStatusEnum::CANCELED->value),
                 Forms\Components\Textarea::make('obs')
                     ->translateLabel()
                     ->columnSpanFull()
@@ -87,16 +84,16 @@ class SubscriptionResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->translateLabel()
                     ->searchable()
-                    ->icon(fn($state) => SubscriptionStatusEnum::from($state)->getIcon())
-                    ->color(fn($state) => SubscriptionStatusEnum::from($state)->getColor())
-                    ->tooltip(fn($state) => SubscriptionStatusEnum::from($state)->getLabel()),
+                    ->icon(fn ($state) => SubscriptionStatusEnum::from($state)->getIcon())
+                    ->color(fn ($state) => SubscriptionStatusEnum::from($state)->getColor())
+                    ->tooltip(fn ($state) => SubscriptionStatusEnum::from($state)->getLabel()),
                 Tables\Columns\TextColumn::make('price')
                     ->translateLabel()
                     ->money()
                     ->sortable()
                     ->summarize([
                         Tables\Columns\Summarizers\Summarizer::make()
-                            ->using(fn(\Illuminate\Database\Query\Builder $query) => $query->sum('price') / 100)
+                            ->using(fn (\Illuminate\Database\Query\Builder $query) => $query->sum('price') / 100)
                             ->money(),
                     ]),
                 Tables\Columns\TextColumn::make('currency')
@@ -143,7 +140,7 @@ class SubscriptionResource extends Resource
             ->defaultGroup(
                 Tables\Grouping\Group::make('billing_period')
                     ->label(__('Billing period'))
-                    ->getTitleFromRecordUsing(fn(Model $record) => SubscriptionBillingPeriodEnum::from($record->billing_period)->getLabel())
+                    ->getTitleFromRecordUsing(fn (Model $record) => SubscriptionBillingPeriodEnum::from($record->billing_period)->getLabel())
             )
             ->actions([
                 Tables\Actions\ViewAction::make(),

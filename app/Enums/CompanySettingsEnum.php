@@ -51,16 +51,16 @@ enum CompanySettingsEnum: string
                 $utcTime = new \DateTime(null, new \DateTimeZone('UTC'));
 
                 // Us Americans can't handle millitary time
-                $ampm = $time->format('H') > 12 ? ' (' . $time->format('g:i a') . ')' : '';
+                $ampm = $time->format('H') > 12 ? ' ('.$time->format('g:i a').')' : '';
 
                 $time_offset = $time->getOffset() / 3600;
                 $utc_offset = $utcTime->getOffset() / 3600;
 
                 // Remove region name and add a sample time
                 $timezones[$name][$timezone] =
-                    substr($timezone, strlen($name) + 1) . ' - ' .
-                    $time->format('H:i') . $ampm .
-                    ' (' . $time_offset - $utc_offset . 'h) ';
+                    substr($timezone, strlen($name) + 1).' - '.
+                    $time->format('H:i').$ampm.
+                    ' ('.$time_offset - $utc_offset.'h) ';
             }
         }
 
@@ -116,7 +116,7 @@ enum CompanySettingsEnum: string
         ];
 
         if (in_array($this, $allowed) === false) {
-            throw new \Exception($this . ' setting is not allowed to get the next number');
+            throw new \Exception($this.' setting is not allowed to get the next number');
         }
 
         $number = auth()->user()->company->settings()
@@ -132,7 +132,6 @@ enum CompanySettingsEnum: string
                 $this->value,
                 $number
             );
-
 
         return $number;
     }
